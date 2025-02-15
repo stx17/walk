@@ -1,0 +1,17 @@
+local Players = game:GetService("Players")
+local TeleportButton = script.Parent -- Assuming this is inside a GUI button
+local player = Players.LocalPlayer
+
+local function teleportToPlayer(targetPlayerName)
+    local targetPlayer = Players:FindFirstChild(targetPlayerName)
+    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        humanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0) -- Teleport slightly above
+    end
+end
+
+TeleportButton.MouseButton1Click:Connect(function()
+    local targetPlayerName = "TargetPlayer" -- Change this to the actual player name input from a TextBox
+    teleportToPlayer(targetPlayerName)
+end)
